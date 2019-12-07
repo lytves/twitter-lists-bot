@@ -32,6 +32,7 @@ Bot Settings are in the file **twitterlist/config.py:**
 
 * put your *TG_BOT_TOKEN*
 * id of chat or group where the bot will send messages *TG_YOUR_TELEGRAM_PRIVATE_CHAT_ID* (the bot should be an administrator there)
+Note: to get Telegram Chanel/Group ID just forward a message from your channel/griup to this bot @getidsbot, it will send you a response message with info
 * your Twitter API application settings (you can create one here - https://apps.twitter.com/)
 * your twitter account name *TW_LIST_OWNER_SCREEN_NAME*
 * your **public** list name (slug) *TW_LIST_SLUG*
