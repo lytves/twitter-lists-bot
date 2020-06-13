@@ -16,7 +16,7 @@ def main():
     module_logger.info("Start the twitter-lists-bot bot!")
 
     # create an object "bot"
-    updater = Updater(token=TG_BOT_TOKEN)
+    updater = Updater(token=TG_BOT_TOKEN, use_context=True)
 
     # here put the jobs for the bot
     job_queue = updater.job_queue

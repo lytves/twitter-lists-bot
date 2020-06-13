@@ -12,7 +12,8 @@ TW_LAST_MENTIONED_TWIT_ID_FULL_FILENAME = os.path.dirname(os.path.realpath(__fil
                                           + TW_LAST_MENTIONED_TWIT_ID_FILENAME
 
 
-def check_twitter_api(bot, job):
+def check_twitter_api(context):
+
     try:
         # to read a last twit ID from list
         with open(TW_LAST_LIST_TWIT_ID_FULL_FILENAME, 'rt') as file:
@@ -41,8 +42,10 @@ def check_twitter_api(bot, job):
         module_logger.error('Exception of type {!s} in check_twitter_api(): {!s}'.format(type(ex).__name__, str(ex)))
         pass
 
-    twitter = job.context
+    # passes as arg "context" from "job_queue"
+    twitter = context.job.context
 
+    # NEW posts in the user's custom list
     response_obj = twitter.lists.statuses(owner_screen_name=TW_LIST_OWNER_SCREEN_NAME,
                                           slug=TW_LIST_SLUG,
                                           since_id=last_list_twit_id)
@@ -55,7 +58,7 @@ def check_twitter_api(bot, job):
             msg_link = "https://twitter.com/" + twit['user']['screen_name'] \
                        + "/status/" + twit['id_str']
 
-            bot.send_message(chat_id=TG_YOUR_TELEGRAM_PRIVATE_LIST_MSG_CHAT_ID, text=msg_link)
+            context.bot.send_message(chat_id=TG_YOUR_TELEGRAM_PRIVATE_LIST_MSG_CHAT_ID, text=msg_link)
 
             # write a new last tweet id
             try:
@@ -72,6 +75,7 @@ def check_twitter_api(bot, job):
 
             time.sleep(1)
 
+    # MENTIONS
     response_obj = twitter.statuses.mentions_timeline(since_id=last_mentioned_twit_id)
 
     # if exists new tweets in the list
@@ -82,7 +86,7 @@ def check_twitter_api(bot, job):
             msg_link = "https://twitter.com/" + twit['user']['screen_name'] \
                        + "/status/" + twit['id_str']
 
-            bot.send_message(chat_id=TG_YOUR_TELEGRAM_PRIVATE_MENTIONED_MSG_CHAT_ID, text=msg_link)
+            context.bot.send_message(chat_id=TG_YOUR_TELEGRAM_PRIVATE_MENTIONED_MSG_CHAT_ID, text=msg_link)
 
             # write a new last tweet id
             try:
