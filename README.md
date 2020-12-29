@@ -57,4 +57,4 @@ You can read some information about twitter list API if you are interesting in, 
 
 ### License
 
-twitter-lists-bot is released under an MIT License.
+twitter-lists-bot is released under the MIT License.
